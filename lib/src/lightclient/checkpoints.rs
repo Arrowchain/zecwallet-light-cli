@@ -74,7 +74,7 @@ fn find_checkpoint(height: u64, chkpts: Vec<(u64, &'static str, &'static str)>) 
 }
 
 fn get_first_lower_than(height: u64, heights: Vec<u64>) -> Option<u64> {
-    // If it's before the first checkpoint, return None. 
+    // If it's before the first checkpoint, return None.
     if heights.len() == 0 || height < heights[0] {
         return None;
     }

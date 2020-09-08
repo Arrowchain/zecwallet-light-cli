@@ -4,3 +4,4 @@ history.txt
 /.idea/
 tarpaulin-report.html
 /log*
+.DS_Store
