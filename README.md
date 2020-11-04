@@ -15,7 +15,7 @@ Run `zecwallet-cli help` to see a list of all commands.
 
 ## Notes:
 * If you want to run your own server, please see [zecwallet lightwalletd](https://github.com/adityapk00/lightwalletd), and then run `./zecwallet-cli --server http://127.0.0.1:9067`.
-* The log file is in `~/.zero/zerowallet-light-wallet.debug.log`. Wallet is stored in `~/.zero/zerowallet-light-wallet.dat`
+* The log file is in `~/.arrow/quiver-light-wallet.debug.log`. Wallet is stored in `~/.arrow/quiver-light-wallet.dat`
 
 ### Note Management
 Zecwallet-CLI does automatic note and utxo management, which means it doesn't allow you to manually select which address to send outgoing transactions from. It follows these principles:
@@ -49,4 +49,3 @@ Here are some CLI arguments you can pass to `zecwallet-cli`. Please run `zecwall
 * `--seed`: Restore a wallet from a seed phrase. Note that this will fail if there is an existing wallet. Delete (or move) any existing wallet to restore from the 24-word seed phrase
     * Example: `./zecwallet-cli --seed "twenty four words seed phrase"`
  * `--recover`: Attempt to recover the seed phrase from a corrupted wallet
- 

@@ -36,9 +36,9 @@ use crate::ANCHOR_OFFSET;
 
 mod checkpoints;
 
-pub const DEFAULT_SERVER: &str = "https://lightwalletd.zeromachine.io:443";
-pub const WALLET_NAME: &str    = "zerowallet-light-wallet.dat";
-pub const LOGFILE_NAME: &str   = "zerowallet-light-wallet.debug.log";
+pub const DEFAULT_SERVER: &str = "https://lightwalletarw.zeromachine.io:443";
+pub const WALLET_NAME: &str    = "quiver-light-wallet.dat";
+pub const LOGFILE_NAME: &str   = "quiver-light-wallet.debug.log";
 
 #[derive(Clone, Debug)]
 pub struct WalletStatus {
@@ -71,12 +71,12 @@ pub struct AddressParameters {
 impl AddressParameters {
     pub fn new() -> Self {
         AddressParameters {
-            coin_type: Some(323), //Zero Default COIN_TYPE
-            hrp_sapling_extended_spending_key: None,
+            coin_type: Some(350), //Arrow Default COIN_TYPE
+            hrp_sapling_extended_spending_key: Some("secret-extended-key-main".to_string()),
             hrp_sapling_extended_full_viewing_key: None,
-            hrp_sapling_payment_address: None,
-            b58_pubkey_address_prefix: None,
-            b58_script_address_prefix: None
+            hrp_sapling_payment_address: Some("as".to_string()),
+            b58_pubkey_address_prefix: Some([0x13, 0x0f]),
+            b58_script_address_prefix: Some([0x13, 0x1b])
         }
     }
 }
@@ -139,7 +139,7 @@ impl LightClientConfig {
     pub fn get_log_config(&self) -> io::Result<Config> {
         let window_size = 3; // log0, log1, log2
         let fixed_window_roller =
-            FixedWindowRoller::builder().build("zerowallet-light-wallet-log{}",window_size).unwrap();
+            FixedWindowRoller::builder().build("quiver-light-wallet-log{}",window_size).unwrap();
         let size_limit = 5 * 1024 * 1024; // 5MB as max log file size to roll
         let size_trigger = SizeTrigger::new(size_limit);
         let compound_policy = CompoundPolicy::new(Box::new(size_trigger),Box::new(fixed_window_roller));
@@ -172,13 +172,13 @@ impl LightClientConfig {
         } else {
             if cfg!(target_os="macos") || cfg!(target_os="windows") {
                 zcash_data_location = dirs::data_dir().expect("Couldn't determine app data directory!");
-                zcash_data_location.push("Zero");
+                zcash_data_location.push("Arrow");
             } else {
                 if dirs::home_dir().is_none() {
                     info!("Couldn't determine home dir!");
                 }
                 zcash_data_location = dirs::home_dir().expect("Couldn't determine home directory!");
-                zcash_data_location.push(".zero");
+                zcash_data_location.push(".arrow");
             };
 
             match &self.chain_name[..] {
@@ -195,8 +195,8 @@ impl LightClientConfig {
             match std::fs::create_dir_all(zcash_data_location.clone()) {
                 Ok(_) => {},
                 Err(e) => {
-                    eprintln!("Couldn't create zero directory!\n{}", e);
-                    panic!("Couldn't create zero directory!");
+                    eprintln!("Couldn't create arrow directory!\n{}", e);
+                    panic!("Couldn't create arrow directory!");
                 }
             }
         }
